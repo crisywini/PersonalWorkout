@@ -5,8 +5,10 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import co.crisi.crisiroutine.model.Mode;
 import co.crisi.crisiroutine.view.Finder;
 import co.crisi.crisitourine.application.Main;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -38,6 +40,24 @@ public class MainController {
 	void initialize() {
 		loadMenuPane();
 	}
+
+	@FXML
+	void handleChangeMode(ActionEvent event) {
+		String chooseStr = choose("MODOS", "Elije un modo", "BULKING", "SHREDDING");
+		if (chooseStr.equals("BULKING")) {
+			main.setMode(Mode.BULKING);
+			main.generateNew();
+		} else {
+			main.setMode(Mode.SHREDDING);
+			main.generateNew();
+		}
+		showAlert("Modo elegido: " + chooseStr, "INFORMACIÓN", "", AlertType.INFORMATION);
+	}
+    @FXML
+    void handleAbout(ActionEvent event) {
+    	String info = "CrisiRoutine es una aplicación que permite \nGenerar rutinas de entrenamiento leyendo de un archivo los ejercicios\nSe creó con el ánimo de automatizar el proceso de creación de mi rutina personal.";
+    	showAlert(info, "INFORMACIÓN", "", AlertType.INFORMATION);
+    }
 
 	public void loadMenuPane() {
 		if (menuPane == null) {
